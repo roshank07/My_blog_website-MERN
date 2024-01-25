@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navbar,TextInput,Button,Label, Alert, Spinner } from 'flowbite-react';
+import {TextInput,Button,Label, Alert, Spinner } from 'flowbite-react';
 import {Link,useNavigate } from 'react-router-dom';
 import base_url from '../helper.js';
 
