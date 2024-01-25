@@ -3,6 +3,7 @@ import bcryptjs from "bcryptjs";
 import errorHandler from "../utils/error.js";
 const authController={
     signUp:async(req,res,next)=>{
+        // console.log("Inhere_conroller",req.body);
         const{username,email,password}=req.body;
         if(!username||!password||!email||username===''||password===''||email===''){
             // res.status(400).json({message:'Please enter all the field'});
