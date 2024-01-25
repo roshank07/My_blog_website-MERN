@@ -4,5 +4,7 @@ import authController from "../controllers/auth.controller.js";
 const authRoute=express.Router();
 //  console.log("Inhere_routes");
 authRoute.post('/signup',authController.signUp);
+authRoute.post('/signin',authController.signIn);
+
 
 export default authRoute;

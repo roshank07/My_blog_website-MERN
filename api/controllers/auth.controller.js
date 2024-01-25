@@ -1,6 +1,7 @@
 import User from "../models/user.model.js"
 import bcryptjs from "bcryptjs";
 import errorHandler from "../utils/error.js";
+import JsonWebToken from "jsonwebtoken";
 const authController={
     signUp:async(req,res,next)=>{
         // console.log("Inhere_conroller",req.body);
@@ -25,6 +26,44 @@ const authController={
            next(error);
             }
    },
-   }
+   signIn:async(req,res,next)=>{
+    const {username,password}=req.body;
+    if(!username||!password||username===''||password===''){
+        // res.status(400).json({message:'Please enter all the field'});
+        next(errorHandler(400,'Please enter all the fields'));
+        return;
+    }
+    try{
+        const userData = await User.findOne({ username:username });
+
+        if(userData){
+            const PasswordVerify=bcryptjs.compareSync(password, userData.password);
+            
+            if(PasswordVerify){
+                const token= await JsonWebToken.sign(
+                    {id:userData._id},process.env.JWT_SECRET);
+
+                const {password:pass,...rest}=userData._doc;
+
+                res.status(200).cookie('access_token',token,{httpOnly:true})
+                    .json(rest);
+            }
+            else
+            {
+                next(errorHandler(400,'Invalid Password'));
+                return;
+            }
+        }
+        else{
+            next(errorHandler(404,'User not found'));
+            return;
+        }
+
+    }catch(error){
+       next(error);
+    }
+
+   },
+}
    
    export default authController;
