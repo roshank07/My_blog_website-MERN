@@ -3,7 +3,7 @@ import {TextInput,Button,Label, Alert, Spinner } from 'flowbite-react';
 import {Link,useNavigate } from 'react-router-dom';
 import base_url from '../helper.js';
 import {useDispatch,useSelector} from 'react-redux';
-import { signInStart,signInSuccess,signInFailure } from '../redux/user/userslice';
+import { signInStart,signInSuccess,signInFailure } from '../redux/user/userSlice';
 
 const SignIn = () => {
   const [username,setUsername]=useState(undefined);

@@ -8,10 +8,12 @@ import SignIn from './Pages/SignIn';
 import SignUp from './Pages/SignUp';
 import Header from './Component/Header';
 import Footer from './Component/Footer';
+import {BrowserRouter} from 'react-router-dom';
 
 export default function App() {
   return (
     <>
+    <BrowserRouter>
     <Header />
     <Routes>
       <Route path="/" element={<Home />} />
@@ -22,6 +24,7 @@ export default function App() {
       <Route path="/signup" element={<SignUp />} />
     </Routes>
     <Footer />
+    </BrowserRouter>
     </>
   )
 }
