@@ -4,9 +4,10 @@ import {Link,useNavigate } from 'react-router-dom';
 import base_url from '../helper.js';
 import {useDispatch,useSelector} from 'react-redux';
 import { signInStart,signInSuccess,signInFailure } from '../redux/user/userSlice';
+import Oauth from '../Component/Oauth.jsx';
 
 const SignIn = () => {
-  const [username,setUsername]=useState(undefined);
+  const [email,setEmail]=useState(undefined);
   const [password,setPassword]=useState(undefined);
 
   // const [errorMessage,setErrorMessage]=useState(null);
@@ -20,7 +21,7 @@ const handleSignIn=async(e)=>{
   e.preventDefault();
   try {
     //initial Check
-    if(!username||!password){
+    if(!email||!password){
       return dispatch(signInFailure("Please fill out all the fields."));
     }
     // setLoading(true);
@@ -32,7 +33,7 @@ const handleSignIn=async(e)=>{
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({username,password}),
+      body: JSON.stringify({email,password}),
     });
 
     const data = await response.json();
@@ -73,11 +74,11 @@ const handleSignIn=async(e)=>{
         <div className='flex-1'>
           <form className='flex flex-col gap-4'>
             <div className=''>
-              <Label value="Username" />
-              <TextInput id='username' type="text" placeholder="Enter your Username" required   onChange={(e) => setUsername(e.target.value)}/>
+              <Label value="Email" />
+              <TextInput id='email' type="email" placeholder="Enter your Email" required   onChange={(e) => setEmail(e.target.value)}/>
             </div>
             <div className=''>
-              <Label value="password" />
+              <Label value="Password" />
               <TextInput id='password' type="password" placeholder="Enter your Password" required  onChange={(e) => setPassword(e.target.value)} />
             </div>
             <Button gradientDuoTone='tealToLime' type='submit' onClick={handleSignIn} disabled={loading}>
@@ -88,6 +89,7 @@ const handleSignIn=async(e)=>{
                 </>
               ):'SignIn'}
               </Button>
+              <Oauth />
           </form>
           <div className='flex gap-2 text-sm mt-5'>
             <span>Don't have an account?</span>

@@ -5,6 +5,7 @@ const authRoute=express.Router();
 //  console.log("Inhere_routes");
 authRoute.post('/signup',authController.signUp);
 authRoute.post('/signin',authController.signIn);
+authRoute.post('/google',authController.googleSignIn);
 
 
 export default authRoute;

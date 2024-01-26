@@ -27,14 +27,14 @@ const authController={
             }
    },
    signIn:async(req,res,next)=>{
-    const {username,password}=req.body;
-    if(!username||!password||username===''||password===''){
+    const {email,password}=req.body;
+    if(!email||!password||email===''||password===''){
         // res.status(400).json({message:'Please enter all the field'});
         next(errorHandler(400,'Please enter all the fields'));
         return;
     }
     try{
-        const userData = await User.findOne({ username:username });
+        const userData = await User.findOne({ email:email });
 
         if(userData){
             const PasswordVerify=bcryptjs.compareSync(password, userData.password);
@@ -61,6 +61,43 @@ const authController={
 
     }catch(error){
        next(error);
+    }
+
+   },
+
+   googleSignIn:async(req,res,next)=>{
+    const {name,email,googlePhotoUrl}=req.body;
+    try{
+        const userData = await User.findOne({ email:email });
+
+        if(userData){
+            const token= JsonWebToken.sign(
+                {id:userData._id},process.env.JWT_SECRET);
+
+            const {password,...rest}=userData._doc;
+            res.status(200).cookie('access_token',token,{httpOnly:true,})
+                .json(rest);
+        }
+        else{
+            const generatedPassword=Math.random().toString(36).slice(-8)+Math.random().toString(36).slice(-8);
+            const hashedPassword=bcryptjs.hashSync(generatedPassword,10);
+            const user=new User({
+                username:name.toLowerCase().split(' ').join('')+Math.random().toString(9).slice(-4),
+                email:email,
+                password:hashedPassword,
+                profilePicture:googlePhotoUrl,
+                });
+            await user.save();
+            const token= JsonWebToken.sign(
+                {id:user._id},process.env.JWT_SECRET);
+
+            const {password,...rest}=user._doc;
+            res.status(200).cookie('access_token',token,{httpOnly:true,})
+                .json(rest);
+        }
+
+    } catch(error){
+        next(error);
     }
 
    },

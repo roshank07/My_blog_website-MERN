@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {TextInput,Button,Label, Alert, Spinner } from 'flowbite-react';
 import {Link,useNavigate } from 'react-router-dom';
 import base_url from '../helper.js';
+import Oauth from '../Component/Oauth.jsx';
 
 const SignUp = () => {
   const [username,setUsername]=useState(undefined);
@@ -73,7 +74,7 @@ const handleSignup=async(e)=>{
               <TextInput id='email' type="email" placeholder="john.doe@example.com" required onChange={(e) => setEmail(e.target.value)} />
             </div>
             <div className=''>
-              <Label value="password" />
+              <Label value="Password" />
               <TextInput id='password' type="password" placeholder="Enter your Password" required  onChange={(e) => setPassword(e.target.value)} />
             </div>
             <Button gradientDuoTone='tealToLime' type='submit' onClick={handleSignup} disabled={loading}>
@@ -84,6 +85,7 @@ const handleSignup=async(e)=>{
                 </>
               ):'Signup'}
               </Button>
+              <Oauth />
           </form>
           <div className='flex gap-2 text-sm mt-5'>
             <span>Already have an account?</span>
