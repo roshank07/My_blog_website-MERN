@@ -10,6 +10,8 @@ import Header from './Component/Header';
 import Footer from './Component/Footer';
 import {BrowserRouter} from 'react-router-dom';
 import PrivateRoute from './Component/PrivateRoute';
+import AdminPrivateRoute from './Component/AdminPrivateRoute';
+import CreatePost from './Pages/CreatePost';
 
 export default function App() {
   return (
@@ -21,6 +23,9 @@ export default function App() {
       <Route path="/about" element={<About />} />
       <Route element={<PrivateRoute />} >
         <Route path="/dashboard" element={<Dashboard />} />
+      </Route>
+      <Route element={<AdminPrivateRoute />} >
+        <Route path="/createpost" element={<CreatePost />} />
       </Route>
       <Route path="/project" element={<Project />} />
       <Route path="/signin" element={<SignIn />} />

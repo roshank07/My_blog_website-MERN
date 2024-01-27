@@ -1,5 +1,6 @@
 import { Alert, Button, Modal, TextInput } from 'flowbite-react';
 import React, { useEffect, useRef, useState } from 'react'
+import {Link} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     getDownloadURL,
@@ -22,7 +23,7 @@ import {HiOutlineExclamationCircle} from 'react-icons/hi'
 
 
 export default function DashProfile() {
-    const {currentUser,error} = useSelector(state=>state.user);
+    const {currentUser,error,loading} = useSelector(state=>state.user);
     const [imageFile,setImageFile]=useState(null);
     const [imageUrl,setImageFileUrl]=useState(null);
     const [imageFileUploading,setImageFileUploading]=useState(false);
@@ -247,15 +248,29 @@ export default function DashProfile() {
           gradientDuoTone="purpleToBlue"
           outline
           onClick={handleClickUpdate}
+          disabled={loading || imageFileUploading}
         >
-          Update
+          {loading ? "Loading..." : "Update"}
         </Button>
+        {currentUser.isAdmin && (
+          <Link to="/createpost">
+            <Button
+              type="button"
+              gradientDuoTone="cyanToBlue"
+              className="w-full"
+            >
+              Create Post
+            </Button>
+          </Link>
+        )}
       </form>
       <div className="flex justify-between mt-4 text-red-500">
         <span onClick={() => setShowModal(true)} className="cursor-pointer">
           Delete Account
         </span>
-        <span onClick={handleSignout} className="cursor-pointer">Sign Out</span>
+        <span onClick={handleSignout} className="cursor-pointer">
+          Sign Out
+        </span>
       </div>
       {updateUserSuccess && (
         <Alert color="success" className="mt-5">
@@ -267,7 +282,7 @@ export default function DashProfile() {
           {updateUserError}
         </Alert>
       )}
-       {error && (
+      {error && (
         <Alert color="failure" className="mt-5">
           {error}
         </Alert>
