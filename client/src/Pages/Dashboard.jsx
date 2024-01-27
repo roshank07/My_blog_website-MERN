@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom'
 // import { useSelector } from 'react-redux';
 import DashSidebar from '../Component/DashSidebar';
 import DashProfile from '../Component/DashProfile';
+import DashPosts from '../Component/DashPosts';
 
 
 export default function Dashboard() {
@@ -20,6 +21,7 @@ export default function Dashboard() {
         <DashSidebar/>
       </div>
       {tab==='profile'&&<DashProfile />}
+      {tab==='posts'&&<DashPosts/>}
     </div>
   )
 }
