@@ -40,7 +40,7 @@ const authController={
             const PasswordVerify=bcryptjs.compareSync(password, userData.password);
             
             if(PasswordVerify){
-                const token= await JsonWebToken.sign(
+                const token= JsonWebToken.sign(
                     {id:userData._id},process.env.JWT_SECRET);
 
                 const {password:pass,...rest}=userData._doc;
