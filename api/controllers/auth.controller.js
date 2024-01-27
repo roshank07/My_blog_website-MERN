@@ -41,7 +41,7 @@ const authController={
             
             if(PasswordVerify){
                 const token= JsonWebToken.sign(
-                    {id:userData._id},process.env.JWT_SECRET);
+                    {id:userData._id,isAdmin:userData.isAdmin},process.env.JWT_SECRET);
 
                 const {password:pass,...rest}=userData._doc;
 
@@ -72,7 +72,7 @@ const authController={
 
         if(userData){
             const token= JsonWebToken.sign(
-                {id:userData._id},process.env.JWT_SECRET);
+                {id:userData._id,isAdmin:userData.isAdmin},process.env.JWT_SECRET);
 
             const {password,...rest}=userData._doc;
             res.status(200).cookie('access_token',token,{httpOnly:true,})
@@ -89,7 +89,7 @@ const authController={
                 });
             await user.save();
             const token= JsonWebToken.sign(
-                {id:user._id},process.env.JWT_SECRET);
+                {id:user._id,isAdmin:user.isAdmin},process.env.JWT_SECRET);
 
             const {password,...rest}=user._doc;
             res.status(200).cookie('access_token',token,{httpOnly:true,})
