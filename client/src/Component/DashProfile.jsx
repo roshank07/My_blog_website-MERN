@@ -127,7 +127,7 @@ export default function DashProfile() {
       setFormData({});
     }
   const handleDeleteUser=async()=>{
-
+    setShowModal(false);
     try {
       dispatch(deleteUserStart());
       const result=await fetch(`/api/user/delete/${currentUser._id}`,{
@@ -147,8 +147,29 @@ export default function DashProfile() {
     } catch (error) {
       dispatch(deleteUserFailure(error.message));
     }
-    setShowModal(false);
+    
 
+  }
+  const handleSignout=async()=>{
+    try {
+      dispatch(deleteUserStart());
+      const result=await fetch(`/api/user/signout/${currentUser._id}`,{
+        method:'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data=await result.json();
+      if(result.ok){
+        dispatch(deleteUserSuccess(data));
+      }
+      else{
+        dispatch(deleteUserFailure(data.message));
+      }
+      
+    } catch (error) {
+      dispatch(deleteUserFailure(data.message));
+    }
   }
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
@@ -234,7 +255,7 @@ export default function DashProfile() {
         <span onClick={() => setShowModal(true)} className="cursor-pointer">
           Delete Account
         </span>
-        <span className="cursor-pointer">Sign Out</span>
+        <span onClick={handleSignout} className="cursor-pointer">Sign Out</span>
       </div>
       {updateUserSuccess && (
         <Alert color="success" className="mt-5">

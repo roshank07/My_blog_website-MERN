@@ -6,6 +6,7 @@ const userRoute=express.Router();
 
 userRoute.get('/test',userController.test);
 userRoute.put('/update/:userId',verifyUser,userController.updateUser);
-userRoute.delete('/delete/:userId',verifyUser,userController.deleteUser)
+userRoute.delete('/delete/:userId',verifyUser,userController.deleteUser);
+userRoute.post('/signout/:userId',verifyUser,userController.userSignout);
 
 export default userRoute;
