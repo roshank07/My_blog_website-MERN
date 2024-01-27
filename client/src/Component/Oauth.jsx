@@ -3,7 +3,6 @@ import {AiFillGoogleCircle} from 'react-icons/ai';
 import React from 'react';
 import {GoogleAuthProvider, getAuth, signInWithPopup} from 'firebase/auth';
 import {app} from '../firebase';
-import base_url from '../helper';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { signInSuccess } from '../redux/user/userSlice';
@@ -17,7 +16,7 @@ export default function Oauth() {
         provider.setCustomParameters({prompt:'select_account'});
         try{
             const result=await signInWithPopup(auth,provider);
-            const response=await fetch(`${base_url.backend_url}/api/auth/google`,{
+            const response=await fetch(`/api/auth/google`,{
                 method: 'POST',
                 headers:{'Content-Type':'application/json'},
                 body: JSON.stringify({
