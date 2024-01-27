@@ -28,7 +28,7 @@ const handleSignIn=async(e)=>{
     // setErrorMessage(null);
     dispatch(signInStart());
     // Make a POST request to the backend API
-    const response=await fetch(`${base_url.backend_url}/api/auth/signin`, {
+    const response=await fetch('/api/auth/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

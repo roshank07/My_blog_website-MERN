@@ -7,6 +7,7 @@ const userController = {
     res.json({ message: "API test is working2" });
   },
   updateUser: async (req, res, next) => {
+    // console.log(req.body);
     if (req.user.id !== req.params.userId) {
       return next(errorHandler(403, "You are not allowed to update this user"));
     }

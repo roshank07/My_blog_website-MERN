@@ -21,8 +21,9 @@ const handleSignup=async(e)=>{
     }
 
     setLoading(true);
+    setErrorMessage(null);
     // Make a POST request to the backend API
-    const response=await fetch(`${base_url.backend_url}/api/auth/signup`, {
+    const response=await fetch('/api/auth/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
