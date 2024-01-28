@@ -5,6 +5,7 @@ import {verifyUser} from "../utils/verifyUser.js"
 const postRoute=express.Router();
 //  console.log("Inhere_routes");
 postRoute.post('/create',verifyUser,postController.createPost);
+postRoute.get('/getposts',postController.getPost);
 
 
 export default postRoute;
