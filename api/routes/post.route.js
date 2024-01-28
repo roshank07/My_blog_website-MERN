@@ -7,6 +7,7 @@ const postRoute=express.Router();
 postRoute.post('/create',verifyUser,postController.createPost);
 postRoute.get('/getposts',postController.getPost);
 postRoute.delete('/deletepost/:postId/:userId',verifyUser,postController.deletePost);
+postRoute.put('/updatepost/:postId/:userId',verifyUser,postController.updatePost);
 
 
 export default postRoute;

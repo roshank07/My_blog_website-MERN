@@ -12,6 +12,7 @@ import {BrowserRouter} from 'react-router-dom';
 import PrivateRoute from './Component/PrivateRoute';
 import AdminPrivateRoute from './Component/AdminPrivateRoute';
 import CreatePost from './Pages/CreatePost';
+import UpdatePost from './Pages/UpdatePost';
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
       </Route>
       <Route element={<AdminPrivateRoute />} >
         <Route path="/createpost" element={<CreatePost />} />
+        <Route path="/updatepost/:postId" element={<UpdatePost />} />
       </Route>
       <Route path="/project" element={<Project />} />
       <Route path="/signin" element={<SignIn />} />
