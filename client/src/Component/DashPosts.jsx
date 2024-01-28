@@ -5,6 +5,7 @@ import { Table } from "flowbite-react";
 
 export default function DashPosts() {
   const [userPosts, setUserPosts] = useState([]);
+  const[showMore,setShowore]=useState(true);
   const { currentUser } = useSelector((state) => state.user);
   useEffect(() => {
     const getPost = async () => {
@@ -15,6 +16,9 @@ export default function DashPosts() {
         const data = await result.json();
         if (result.ok) {
           setUserPosts(data.posts);
+          if(data.posts.length<9){
+            setShowore(false);
+          }
         }
       } catch (error) {
         console.log(error.message);
@@ -25,6 +29,24 @@ export default function DashPosts() {
     }
   }, [currentUser._id]);
   // console.log('userposts',userPosts);
+
+  const handleShowmore=async()=>{
+    const startIndex=userPosts.length;
+    try {
+      const result = await fetch(
+        `/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`);
+      const data = await result.json();
+      if (result.ok) {
+        setUserPosts((prev)=>[...prev,...data.posts]);
+        if(data.posts.length<9){
+          setShowore(false);
+        }
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
+
+  }
   return (
     <div className="table-auto overflow-scroll md:mx-auto p-3 scrollbar
      scrollbar-track-slate-100 scrollbar-thumb-slate-300 
@@ -87,6 +109,9 @@ export default function DashPosts() {
               </Table.Body>
             ))}
           </Table>
+          {showMore&&(
+            <button className="w-full text-teal-500 self-center text-sm py-7" onClick={handleShowmore}>Show More</button>
+          )}
         </>
       ) : (
         <p>You have No post</p>

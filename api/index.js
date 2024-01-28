@@ -4,14 +4,14 @@ import mongoose from "mongoose";
 import userRoute from "./routes/user.route.js";
 import authRoute from "./routes/auth.route.js";
 import postRoute from "./routes/post.route.js";
-import cors from "cors";
+// import cors from "cors";
 import cookieParser from "cookie-parser";
 
 
 dotenv.config();
 const app=express();
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
 app.use(cookieParser());
 const PORT=process.env.PORT||3000;
 
