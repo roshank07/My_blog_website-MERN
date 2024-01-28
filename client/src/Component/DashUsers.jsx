@@ -50,7 +50,30 @@ export default function DashUsers() {
       console.log(error.message);
     }
   };
-  const handleDeleteUser=()=>{};
+  const handleDeleteUser=async()=>{
+    setShowModal(false);
+    try {
+      const result = await fetch(
+        `/api/user/delete/${userIdToDelete}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await result.json();
+      if (result.ok) {
+        setUsers((prev)=>
+          prev.filter((user)=>user._id!==userIdToDelete)
+        );
+      } else {
+        console.log(data.message);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   return (
     <div
       className="table-auto overflow-scroll md:mx-auto p-3 scrollbar

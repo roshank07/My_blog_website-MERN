@@ -10,4 +10,5 @@ userRoute.delete('/delete/:userId',verifyUser,userController.deleteUser);
 userRoute.post('/signout/:userId',verifyUser,userController.userSignout);
 userRoute.get('/getusers',verifyUser,userController.getUsers);
 
+
 export default userRoute;
