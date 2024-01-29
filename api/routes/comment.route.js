@@ -6,5 +6,7 @@ const commentRoute=express.Router();
 
 
 commentRoute.post('/create',verifyUser,commentController.createComment);
+commentRoute.get('/getPostComments/:postId',verifyUser,commentController.getComment);
+
 
 export default commentRoute;

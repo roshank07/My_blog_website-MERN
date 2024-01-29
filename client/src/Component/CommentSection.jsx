@@ -1,12 +1,30 @@
 import { Alert, Button, Textarea } from "flowbite-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Comment from "./Comment";
 
 export default function CommentSection({ postId }) {
   const { currentUser } = useSelector((state) => state.user);
   const [comment, setComment] = useState("");
   const [commentError,setCommentError]=useState(null);
+  const [prevComments,setPrevComments]=useState([]);
+  useEffect(()=>{
+    const fetchComment=async()=>{
+      try {
+        const result=await fetch(`/api/comment/getPostComments/${postId}`);
+        const data=await result.json();
+        if(result.ok){
+          setPrevComments(data);
+        }
+      } catch (error) {
+        console.log(error);
+        
+      }
+    };
+    fetchComment();
+
+  },[postId])
 
   const handleSubmitComment = async (e) => {
     e.preventDefault();
@@ -29,6 +47,7 @@ export default function CommentSection({ postId }) {
       if (result.ok) {
         setComment('');
         setCommentError(null);
+        setPrevComments([data,...prevComments]);
       } else {
         setCommentError(data.message);
       }
@@ -77,8 +96,26 @@ export default function CommentSection({ postId }) {
             </Button>
           </div>
           {commentError&&(<Alert color='failure' className="mt-5" >{commentError}</Alert>)}
-        </form>
-      )}
+        </form>)}
+        {prevComments.length===0?(
+          <p className="text-sm mt-5">No comments</p>
+        ):(
+          <>
+          <div className="flex items-center mt-5 text-sm gap-1">
+            <p>Comments</p>
+            <div className="border border-gray-500 py-1 px-2 rounded-sm">
+              {prevComments.length}
+            </div>
+          </div>
+          {prevComments.map((comment) => (
+            <Comment
+              key={comment._id}
+              comment={comment}
+            />
+          ))}
+          </>
+        )}
+      
     </div>
   );
 }
