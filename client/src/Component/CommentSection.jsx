@@ -1,30 +1,29 @@
 import { Alert, Button, Textarea } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Comment from "./Comment";
 
 export default function CommentSection({ postId }) {
   const { currentUser } = useSelector((state) => state.user);
   const [comment, setComment] = useState("");
-  const [commentError,setCommentError]=useState(null);
-  const [prevComments,setPrevComments]=useState([]);
-  useEffect(()=>{
-    const fetchComment=async()=>{
+  const [commentError, setCommentError] = useState(null);
+  const [prevComments, setPrevComments] = useState([]);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const fetchComment = async () => {
       try {
-        const result=await fetch(`/api/comment/getPostComments/${postId}`);
-        const data=await result.json();
-        if(result.ok){
+        const result = await fetch(`/api/comment/getPostComments/${postId}`);
+        const data = await result.json();
+        if (result.ok) {
           setPrevComments(data);
         }
       } catch (error) {
         console.log(error);
-        
       }
     };
     fetchComment();
-
-  },[postId])
+  }, [postId]);
 
   const handleSubmitComment = async (e) => {
     e.preventDefault();
@@ -33,9 +32,9 @@ export default function CommentSection({ postId }) {
     }
     try {
       const result = await fetch("/api/comment/create", {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           postId,
@@ -45,14 +44,41 @@ export default function CommentSection({ postId }) {
       });
       const data = await result.json();
       if (result.ok) {
-        setComment('');
+        setComment("");
         setCommentError(null);
-        setPrevComments([data,...prevComments]);
+        setPrevComments([data, ...prevComments]);
       } else {
         setCommentError(data.message);
       }
     } catch (error) {
       setCommentError(error);
+    }
+  };
+  const handleLike = async (commentId) => {
+    try {
+      if (!currentUser) {
+        navigate("/signin");
+        return;
+      }
+      const result = await fetch(`/api/comment/likeComment/${commentId}`, {
+        method: "PUT",
+      });
+      if (result.ok) {
+        const data = await result.json();
+        setPrevComments(
+          prevComments.map((comment) => 
+            comment._id === commentId
+              ? {
+                  ...comment,
+                  likes: data.likes,
+                  numberOflikes: data.likes.length,
+                }
+              : comment
+          )
+        );
+      }
+    } catch (error) {
+      console.log(error.message);
     }
   };
   return (
@@ -91,16 +117,25 @@ export default function CommentSection({ postId }) {
           />
           <div className="flex justify-between items-center mt-5">
             <p>{200 - comment.length} characters Remaining</p>
-            <Button gradientDuoTone="purpleToPink" outline onClick={handleSubmitComment}>
+            <Button
+              gradientDuoTone="purpleToPink"
+              outline
+              onClick={handleSubmitComment}
+            >
               Comment
             </Button>
           </div>
-          {commentError&&(<Alert color='failure' className="mt-5" >{commentError}</Alert>)}
-        </form>)}
-        {prevComments.length===0?(
-          <p className="text-sm mt-5">No comments</p>
-        ):(
-          <>
+          {commentError && (
+            <Alert color="failure" className="mt-5">
+              {commentError}
+            </Alert>
+          )}
+        </form>
+      )}
+      {prevComments.length === 0 ? (
+        <p className="text-sm mt-5">No comments</p>
+      ) : (
+        <>
           <div className="flex items-center mt-5 text-sm gap-1">
             <p>Comments</p>
             <div className="border border-gray-500 py-1 px-2 rounded-sm">
@@ -108,14 +143,10 @@ export default function CommentSection({ postId }) {
             </div>
           </div>
           {prevComments.map((comment) => (
-            <Comment
-              key={comment._id}
-              comment={comment}
-            />
+            <Comment key={comment._id} comment={comment} onLike={handleLike} />
           ))}
-          </>
-        )}
-      
+        </>
+      )}
     </div>
   );
 }
