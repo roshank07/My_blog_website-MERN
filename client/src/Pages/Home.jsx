@@ -35,9 +35,6 @@ function Home() {
           See All Posts
         </Link>
       </div>
-      <div className="p-3 bg-blue-200 dark:bg-slate-700">
-        <CallToAction />
-      </div>
       <div className="max-w-6xl mx-auto p-3 flex flex-col">
         {posts && posts.length > 0 && (
           <div className="flex flex-col gap-6">
@@ -56,6 +53,9 @@ function Home() {
           </div>
         )}
       </div>
+      {/* <div className=" bg-blue-200 dark:bg-slate-700">
+        <CallToAction />
+      </div> */}
     </div>
   );
 }
