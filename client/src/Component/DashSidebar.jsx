@@ -1,7 +1,7 @@
 import { Sidebar } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import { useLocation,Link } from "react-router-dom";
-import { HiAnnotation, HiArrowSmRight, HiDocumentText, HiOutlineUserGroup, HiUser } from "react-icons/hi";
+import { HiAnnotation, HiArrowSmRight, HiChartPie, HiDocumentText, HiOutlineUserGroup, HiUser } from "react-icons/hi";
 import { useDispatch,useSelector } from "react-redux";
 import {
   deleteUserStart,
@@ -49,6 +49,15 @@ export default function DashSidebar() {
       <Sidebar className="w-full md:w-56">
         <Sidebar.Items>
           <Sidebar.ItemGroup className="flex flex-col gap-1">
+          {currentUser.isAdmin&&(
+              <Sidebar.Item
+              active={tab === "dash"||!tab}
+              icon={HiChartPie}
+              as="div"
+            >
+            <Link to="/dashboard?tab=dash">Dashboard</Link>
+            </Sidebar.Item>
+            )}
             <Sidebar.Item
               active={tab === "profile"}
               icon={HiUser}
