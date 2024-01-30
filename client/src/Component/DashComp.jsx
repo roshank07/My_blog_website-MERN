@@ -194,7 +194,7 @@ export default function DashComp() {
           <div className="flex justify-between p-3 text-sm font-semibold">
             <h1 className="text-center p-2">Recent Comments</h1>
             <Button gradientDuoTone="purpleToPink" outline>
-              <Link to={"/dashboard?tab=users"}>See more</Link>
+              <Link to={"/dashboard?tab=comments"}>See more</Link>
             </Button>
           </div>
           <Table hoverable>
