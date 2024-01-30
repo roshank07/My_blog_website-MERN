@@ -47,7 +47,7 @@ export default function PostPage() {
     } catch (error) {
       console.log(error.message);
     }
-  })
+  },[])
 
   if (loading)
     return (

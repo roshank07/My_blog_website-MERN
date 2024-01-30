@@ -10,6 +10,7 @@ commentRoute.get('/getPostComments/:postId',verifyUser,commentController.getComm
 commentRoute.put('/likeComment/:commentId/',verifyUser,commentController.likeComment);
 commentRoute.put('/editComment/:commentId/',verifyUser,commentController.editComment);
 commentRoute.delete('/deleteComment/:commentId',verifyUser,commentController.deleteComment);
+commentRoute.get('/getComments',verifyUser,commentController.getComments);
 
 
 
