@@ -6,9 +6,7 @@ import { FaMoon, FaSun } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice";
 import {
-  deleteUserStart,
-  deleteUserSuccess,
-  deleteUserFailure,
+ signOutUserSuccess
 } from "../redux/user/userSlice";
 
 export default function Header() {
@@ -30,8 +28,7 @@ export default function Header() {
 
   const handleSignout = async () => {
     try {
-      dispatch(deleteUserStart());
-      const result = await fetch(`/api/user/signout/${currentUser._id}`, {
+      const result = await fetch(`/api/user/signout`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,12 +36,12 @@ export default function Header() {
       });
       const data = await result.json();
       if (result.ok) {
-        dispatch(deleteUserSuccess(data));
+        dispatch(signOutUserSuccess());
       } else {
-        dispatch(deleteUserFailure(data.message));
+        console.log(data.message)
       }
     } catch (error) {
-      dispatch(deleteUserFailure(data.message));
+      console.log(error.message);
     }
   };
   const handleSubmit=(e)=>{

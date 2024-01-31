@@ -4,9 +4,7 @@ import { useLocation,Link } from "react-router-dom";
 import { HiAnnotation, HiArrowSmRight, HiChartPie, HiDocumentText, HiOutlineUserGroup, HiUser } from "react-icons/hi";
 import { useDispatch,useSelector } from "react-redux";
 import {
-  deleteUserStart,
-  deleteUserSuccess,
-  deleteUserFailure
+ signOutUserSuccess
 } from "../redux/user/userSlice";
 
 
@@ -25,23 +23,20 @@ export default function DashSidebar() {
 
     const handleSignout=async()=>{
       try {
-        dispatch(deleteUserStart());
-        const result=await fetch(`/api/user/signout/${currentUser._id}`,{
+        const result=await fetch(`/api/user/signout`,{
           method:'POST',
           headers: {
             'Content-Type': 'application/json',
           },
         });
         const data=await result.json();
-        if(result.ok){
-          dispatch(deleteUserSuccess(data));
+        if (result.ok) {
+          dispatch(signOutUserSuccess());
+        } else {
+          console.log(data.message)
         }
-        else{
-          dispatch(deleteUserFailure(data.message));
-        }
-        
       } catch (error) {
-        dispatch(deleteUserFailure(data.message));
+        console.log(error.message);
       }
     }
   
