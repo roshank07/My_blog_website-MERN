@@ -52,6 +52,9 @@ export default function Header() {
     navigate(`/search?${searchQuery}`);
 
   }
+  const handleOutlineSearch=()=>{
+    navigate(`/search`);
+  }
   return (
     <Navbar className="border-b-2">
       <Link
@@ -61,29 +64,41 @@ export default function Header() {
       >
         <span
           className="px-2 py-1 bg-gradient-to-r 
-        from-blue-500 via-purple-500 to-pink-500
+        from-blue-500 via-purple-500 to-violet-500
         rounded-lg text-white"
         >
-          Roshan's
+          Void
         </span>
-        Blog
+        Writes
       </Link>
+      {/* <div class="flex items-center">
+        <input
+          type="text"
+          placeholder="Search..."
+          class="border border-gray-300 rounded-l-md py-2 px-4 focus:outline-none focus:border-blue-500"
+          value={searchTerm}
+          onChange={(e)=>setSearchTerm(e.target.value)}
+        />
+        <button onClick={handleSubmit} class="bg-blue-500 text-white rounded-r-md py-2 px-4 hover:bg-blue-600 focus:outline-none">
+          Search
+        </button>
+      </div> */}
       <form onSubmit={handleSubmit}>
         <TextInput
           type="text"
-          placeholder="Search"
+          placeholder="Search..."
           rightIcon={AiOutlineSearch}
           className="hidden lg:inline"
           value={searchTerm}
           onChange={(e)=>setSearchTerm(e.target.value)}
         />
       </form>
-      <Button className="w-12 h-10 lg:hidden" color="grey" pill>
+      <Button className="w-12 h-10 lg:hidden" color="grey" pill onClick={handleOutlineSearch}>
         <AiOutlineSearch />
       </Button>
       <div className="flex gap-2 md:order-2">
         <Button
-          className="w-12 h-10 hidden sm:inline"
+          className="w-12 h-10  sm:inline"
           color="grey"
           pill
           onClick={() => dispatch(toggleTheme())}
@@ -121,13 +136,13 @@ export default function Header() {
       </div>
       <Navbar.Collapse>
         <Navbar.Link active={path === "/"} as={"div"}>
-          <Link to="/">Home</Link>
+          <Link to="/"><div>Home</div></Link>
         </Navbar.Link>
         <Navbar.Link active={path === "/about"} as={"div"}>
-          <Link to="/about">About</Link>
+          <Link to="/about"><div>About</div></Link>
         </Navbar.Link>
         <Navbar.Link active={path === "/project"} as={"div"}>
-          <Link to="/project">Projects</Link>
+          <Link to="/project"><div>Projects</div></Link>
         </Navbar.Link>
       </Navbar.Collapse>
     </Navbar>
