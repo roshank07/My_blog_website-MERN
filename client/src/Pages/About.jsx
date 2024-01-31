@@ -10,7 +10,7 @@ function About() {
           </h1>
           <div className="p-7 rounded flex justify-center">
             <img
-              src="./public/logo.png"
+              src="/logo.png"
               className="rounded items-center h-28"
               alt="Logo"
             />
