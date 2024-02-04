@@ -8,6 +8,7 @@ postRoute.post('/create',verifyUser,postController.createPost);
 postRoute.get('/getposts',postController.getPost);
 postRoute.delete('/deletepost/:postId/:userId',verifyUser,postController.deletePost);
 postRoute.put('/updatepost/:postId/:userId',verifyUser,postController.updatePost);
+postRoute.put('/likepost/:postId',verifyUser,postController.likepost);
 
 
 export default postRoute;

@@ -106,6 +106,30 @@ const postController = {
     }
 
   },
+  likepost:async(req,res,next)=>{
+    try {
+      const post=await Post.findById(req.params.postId);
+      if(!post){
+        return next(errorHandler('Post not found.'));
+      }
+        const userIndex = post.likes.indexOf(req.user.id);
+        if(userIndex === -1){
+          post.numberOflikes+=1;
+          post.likes.push(req.user.id);
+        }
+        else{
+          post.numberOflikes-=1;
+          post.likes.splice(userIndex,1);
+        }
+      await post.save();
+      res.status(200).json(post);
+
+      
+    } catch (error) {
+      next(error);
+    }
+
+  },
 };
 
 export default postController;

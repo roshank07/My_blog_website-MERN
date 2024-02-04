@@ -2,6 +2,7 @@ import { Sidebar } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import { useLocation,Link } from "react-router-dom";
 import { HiAnnotation, HiArrowSmRight, HiChartPie, HiDocumentText, HiOutlineUserGroup, HiUser } from "react-icons/hi";
+import {FaBookmark} from 'react-icons/fa';
 import { useDispatch,useSelector } from "react-redux";
 import {
  signOutUserSuccess
@@ -89,7 +90,14 @@ export default function DashSidebar() {
             <Link to="/dashboard?tab=comments">Comments</Link>
             </Sidebar.Item>
             )}
-            
+            <Sidebar.Item
+              active={tab === "savedposts"}
+              icon={FaBookmark}
+              as="div"
+            >
+            <Link to="/dashboard?tab=savedposts">SavedPosts</Link>
+            </Sidebar.Item>
+
             <Sidebar.Item onClick={handleSignout} icon={HiArrowSmRight} className="cursor-pointer">
               Sign Out
             </Sidebar.Item>

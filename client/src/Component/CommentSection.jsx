@@ -131,7 +131,7 @@ export default function CommentSection({ postId }) {
           </Link>
         </div>
       ) : (
-        <div className="text-sm text-teal-500 my-5 flex gap-1">
+        <div className="text-sm text-gray-500 my-5 flex gap-1">
           Sign in to comment
           <Link className="text-cyan-500 hover:underline" to={"/signin"}>
             Sign In
