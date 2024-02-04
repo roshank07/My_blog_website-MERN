@@ -9,7 +9,9 @@ export default function DashPosts() {
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [postIdToDelete, setPostIdToDelete] = useState(null);
+  const [postIdForComment,setPostIdForComment]=useState(null);
   const { currentUser } = useSelector((state) => state.user);
+  
   useEffect(() => {
     const getPost = async () => {
       try {
@@ -74,6 +76,7 @@ export default function DashPosts() {
       console.log(error);
     }
   };
+  const handleCommentCount=0
   return (
     <div
       className="md:mx-auto p-3"
@@ -90,6 +93,7 @@ export default function DashPosts() {
               <Table.HeadCell>Post Image</Table.HeadCell>
               <Table.HeadCell>Post Title</Table.HeadCell>
               <Table.HeadCell>Category</Table.HeadCell>
+              <Table.HeadCell>Likes</Table.HeadCell>
               <Table.HeadCell>Delete</Table.HeadCell>
               <Table.HeadCell>
                 <span>Edit</span>
@@ -123,6 +127,7 @@ export default function DashPosts() {
                     }
                   </Table.Cell>
                   <Table.Cell>{post.category}</Table.Cell>
+                  <Table.Cell>{post.numberOflikes}</Table.Cell>
                   <Table.Cell>
                     <span
                       onClick={() => {
