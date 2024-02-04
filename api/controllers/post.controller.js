@@ -130,6 +130,50 @@ const postController = {
     }
 
   },
+  savepost:async(req,res,next)=>{
+    try {
+      const post=await Post.findById(req.params.postId);
+      if(!post){
+        return next(errorHandler('Post not found.'));
+      }
+        const userIndex = post.saves.indexOf(req.user.id);
+        if(userIndex === -1){
+          post.numberOfsaves+=1;
+          post.saves.push(req.user.id);
+        }
+        else{
+          post.numberOfsaves-=1;
+          post.saves.splice(userIndex,1);
+        }
+      await post.save();
+      res.status(200).json(post);
+
+      
+    } catch (error) {
+      next(error);
+    }
+  },
+  getSavedPost: async (req, res, next) => {
+    if(req.user.id!==req.query.userId){
+      return next(errorHandler(403,'You are not allowed to see savedPost.'))
+    }
+    try {
+      const startIndex = parseInt(req.query.startIndex) || 0;
+      const limit = parseInt(req.query.limit) || 9;
+      const sortDirection = req.query.order === "asc" ? 1 : -1;
+      const posts = await Post.find({
+        ...(req.query.userId && { saves: { $in: [req.query.userId] }}),
+      })
+        .sort({ updatedAt: sortDirection })
+        .skip(startIndex)
+        .limit(limit);
+
+      const totalSavedPost=posts.length;
+      res.status(200).json({posts,totalSavedPost});
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 export default postController;

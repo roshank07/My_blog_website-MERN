@@ -36,6 +36,14 @@ const postSchema= new mongoose.Schema({
     numberOflikes:{
         type:Number,
         default:0
+    },
+    saves:{
+        type:Array,
+        default:[]
+    },
+    numberOfsaves:{
+        type:Number,
+        default:0
     }
    
 },{timestamps:true}

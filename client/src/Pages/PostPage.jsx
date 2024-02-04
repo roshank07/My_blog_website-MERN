@@ -89,6 +89,35 @@ export default function PostPage() {
     }
   };
 
+  const onPostSave= async(postId)=>{
+    if (!currentUser) {
+      navigate("/signin");
+      return;
+    }
+
+    try {
+      const result = await fetch(`/api/post/savepost/${postId}`, {
+        method: "PUT",
+      });
+
+      if (result.ok) {
+        const data = await result.json();
+        if (post._id === postId) {
+          setPost({
+            ...post,
+            saves: data.saves,
+            numberOfsaves: data.numberOfsaves,
+          });
+        }
+      } else {
+        console.log("Error occured from server.");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+
+  }
+
   return (
     <main className="p-3 flex flex-col max-w-6xl mx-auto min-h-screen">
       <h1 className="text-3xl mt-10 p-3 text-center font-serif max-w-2xl mx-auto lg:text-4xl">
@@ -126,8 +155,22 @@ export default function PostPage() {
               post.numberOflikes}
           </p></span>
         </div>
-        <div className="p-3 max-w-2xl">
-        <FaBookmark />
+        <div className="p-3 max-w-2xl flex flex-start">
+        <span className="pr-2"><button
+            className={`text-gray-500 hover:text-blue-400 ${
+              currentUser &&
+              post.saves.includes(currentUser._id) &&
+              "!text-blue-400"
+            }`}
+            type="button"
+            onClick={() => onPostSave(post._id)}
+          >
+            <FaBookmark className="text-sm" />
+          </button></span>
+          <span><p className="text-gray-400">
+            {post.numberOfsaves > 0 &&
+              post.numberOfsaves}
+          </p></span>
         </div>
         
       </div>
