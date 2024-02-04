@@ -76,12 +76,14 @@ export default function DashPosts() {
   };
   return (
     <div
-      className="table-auto overflow-scroll md:mx-auto p-3 scrollbar
-     scrollbar-track-slate-100 scrollbar-thumb-slate-300 
-     dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500"
+      className="md:mx-auto p-3"
+  
     >
       {currentUser.isAdmin && userPosts.length > 0 ? (
-        <>
+        <div
+        className="table-auto overflow-scroll md:mx-auto p-3 scrollbar
+       scrollbar-track-slate-100 scrollbar-thumb-slate-300 
+       dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
           <Table hoverable className="shadow-md">
             <Table.Head>
               <Table.HeadCell>Date Updated</Table.HeadCell>
@@ -152,7 +154,7 @@ export default function DashPosts() {
               Show More
             </button>
           )}
-        </>
+        </div>
       ) : (
         <p>You have No post</p>
       )}

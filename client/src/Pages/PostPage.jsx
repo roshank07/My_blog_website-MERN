@@ -5,7 +5,7 @@ import CallToAction from "../Component/CallToAction";
 import CommentSection from "../Component/CommentSection";
 import PostCard from "../Component/PostCard";
 import { useSelector } from "react-redux";
-import { FaComment,FaHeart, FaBookmark } from "react-icons/fa";
+import { FaHeart, FaBookmark, FaShareSquare } from "react-icons/fa";
 import moment from "moment";
 
 export default function PostPage() {
@@ -89,7 +89,7 @@ export default function PostPage() {
     }
   };
 
-  const onPostSave= async(postId)=>{
+  const onPostSave = async (postId) => {
     if (!currentUser) {
       navigate("/signin");
       return;
@@ -115,8 +115,23 @@ export default function PostPage() {
     } catch (error) {
       console.log(error.message);
     }
-
-  }
+  };
+  const handleShare = async () => {
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: post.title,
+          url: `/post/${post.slug}`,
+        });
+      } else {
+        // Fallback for browsers that do not support Web Share API
+        console.log("Web Share API not supported.");
+        // Implement your custom share logic here (e.g., open a modal with share options)
+      }
+    } catch (error) {
+      console.error("Error sharing:", error);
+    }
+  };
 
   return (
     <main className="p-3 flex flex-col max-w-6xl mx-auto min-h-screen">
@@ -132,47 +147,61 @@ export default function PostPage() {
         </Button>
       </Link>
       <div className="flex justify-end p-3 mx-auto w-full max-w-2xl text-xs">
-        <span className="pr-3">{post && (moment(post.createdAt).fromNow())}</span>
+        <span className="pr-3">{post && moment(post.createdAt).fromNow()}</span>
         <span className="italic">
           {post && (post.content.length / 1000 + 1).toFixed(0)} mins read
         </span>
       </div>
       <div className="flex justify-between mx-auto w-full max-w-2xl text-xs border-t-2 border-b-2 border-gray-100">
         <div className="p-3 max-w-2xl mx-auto w-full flex flex-start">
-          <span className="pr-2"><button
-            className={`text-gray-500 hover:text-blue-400 ${
-              currentUser &&
-              post.likes.includes(currentUser._id) &&
-              "!text-blue-400"
-            }`}
-            type="button"
-            onClick={() => onPostLike(post._id)}
-          >
-            <FaHeart className="text-sm" />
-          </button></span>
-          <span><p className="text-gray-400">
-            {post.numberOflikes > 0 &&
-              post.numberOflikes}
-          </p></span>
+          <span className="pr-2">
+            <button
+              className={`text-gray-500 hover:text-red-400 ${
+                currentUser &&
+                post.likes.includes(currentUser._id) &&
+                "!text-red-400"
+              }`}
+              type="button"
+              onClick={() => onPostLike(post._id)}
+            >
+              <FaHeart size={20} className="text-sm" />
+            </button>
+          </span>
+          <span className="pr-2">
+            <p className="text-gray-400">
+              {post.numberOflikes > 0 && post.numberOflikes}
+            </p>
+          </span>
+          <span className="pr-2">
+            <button
+              className={`text-gray-500 hover:text-blue-400 ${
+                currentUser &&
+                post.saves.includes(currentUser._id) &&
+                "!text-blue-400"
+              }`}
+              type="button"
+              onClick={() => onPostSave(post._id)}
+            >
+              <FaBookmark size={20} className="text-sm" />
+            </button>
+          </span>
+          <span>
+            <p className="text-gray-400">
+              {post.numberOfsaves > 0 && post.numberOfsaves}
+            </p>
+          </span>
         </div>
         <div className="p-3 max-w-2xl flex flex-start">
-        <span className="pr-2"><button
-            className={`text-gray-500 hover:text-blue-400 ${
-              currentUser &&
-              post.saves.includes(currentUser._id) &&
-              "!text-blue-400"
-            }`}
-            type="button"
-            onClick={() => onPostSave(post._id)}
-          >
-            <FaBookmark className="text-sm" />
-          </button></span>
-          <span><p className="text-gray-400">
-            {post.numberOfsaves > 0 &&
-              post.numberOfsaves}
-          </p></span>
+          <span className="pl-3">
+            <button
+              className="text-gray-500 hover:text-blue-400"
+              type="button"
+              onClick={handleShare}
+            >
+              <FaShareSquare size={20} className="text-sm" />
+            </button>
+          </span>
         </div>
-        
       </div>
       <img
         src={post && post.image}
@@ -184,10 +213,10 @@ export default function PostPage() {
         dangerouslySetInnerHTML={{ __html: post && post.content }}
       ></div>
 
-      <div className="max-w-4xl mx-auto w-full">
+      {/* <div className="max-w-4xl mx-auto w-full">
         <CallToAction />
-      </div>
-      <div id="commentSection">
+      </div> */}
+      <div>
         <CommentSection postId={post._id} />
       </div>
       <div className="flex flex-col justify-center items-center mb-5">
