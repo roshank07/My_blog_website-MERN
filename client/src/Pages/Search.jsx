@@ -2,6 +2,7 @@ import { Button, Select, TextInput } from "flowbite-react";
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import PostCard from "../Component/PostCard";
+import ArticlesList from "../Component/ArticlesList";
 
 export default function Search() {
   const [sideBarData, setSideBarData] = useState({
@@ -150,13 +151,13 @@ export default function Search() {
         <h1 className="text-3xl font-semibold sm:border-b border-gray-500 p-3 mt-2">
           Post Results:
         </h1>
-        <div className="p-7 flex flex-wrap gap-4">
+        <div className="p-7 flex flex-col">
           {!loading && posts.length === 0 && (
             <p className="text-xl text-gray-500">No Posts Found.</p>
           )}
           {loading && <p className="text-xl text-gray-500">Loading...</p>}
           {!loading&&posts &&
-            posts.map((post) => <PostCard key={post._id} post={post} />)}
+            posts.map((post) => <ArticlesList key={post._id} post={post} />)}
             {showMore&&(
                 <button onClick={handleShowMore} className="text-teal-500 text-lg hover:underline p-7 w-full">
                     Show More
