@@ -53,7 +53,7 @@ function Home() {
             <h1 className="text-3xl font-bold lg:text-6xl mb-6">
               Welcome to Void Writes
             </h1>
-            <p className="text-xs lg:text-sm text-gray-500">"{quote&&quote.content}" --{quote&&quote.author}</p>
+            <p className="text-xs lg:text-sm text-pink-500">"{quote&&quote.content}" --{quote&&quote.author}</p>
           </div>
         </div>
         <p className="text-gray-500 font-semibold ">
