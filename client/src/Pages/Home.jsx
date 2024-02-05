@@ -1,28 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ArticlesList from "../Component/ArticlesList";
+
 const imageUrl = "https://source.unsplash.com/random";
 const quoteApiUrl = 'https://api.quotable.io/random';
 
-
 function Home() {
   const [posts, setPosts] = useState([]);
-  const [quote,setQuote]=useState({});
+  const [quote, setQuote] = useState({});
+  const [loading,setLoading]=useState(false);
+
   useEffect(() => {
     const fetchPosts = async () => {
+      setLoading(true);
       try {
         const result = await fetch("/api/post/getposts");
         const data = await result.json();
         if (result.ok) {
           setPosts(data.posts);
+          setLoading(false);
         }
       } catch (error) {
-        console.log(error);
+        console.error("Error fetching posts:", error);
+        setLoading(false);
       }
     };
 
     fetchPosts();
   }, []);
+
   useEffect(() => {
     const fetchquote = async () => {
       try {
@@ -32,7 +38,7 @@ function Home() {
           setQuote(data);
         }
       } catch (error) {
-        console.log(error);
+        console.error("Error fetching quote:", error);
       }
     };
 
@@ -40,8 +46,8 @@ function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen">
-      <div className="flex flex-col gap-6 p-10 px-3 max-w-6xl mx-auto">
+    <div className="min-h-screen ">
+      <div className="flex flex-col p-10 max-w-6xl mx-auto">
         <div className="relative">
           <img
             src={imageUrl}
@@ -53,14 +59,18 @@ function Home() {
             <h1 className="text-3xl font-bold lg:text-6xl mb-6">
               Welcome to Void Writes
             </h1>
-            <p className="text-xs lg:text-sm text-pink-500">"{quote&&quote.content}" --{quote&&quote.author}</p>
+            <p className="text-sm lg:text-md text-pink-500">
+              "{quote && quote.content}" --{quote && quote.author}
+            </p>
           </div>
         </div>
-        <p className="text-gray-500 font-semibold ">
-            I write about Full Stack Development and Singlestore.
-          </p>
+        <p className="font-semibold mt-6">
+          I write about Full Stack Development and Singlestore.
+        </p>
       </div>
       <div className="max-w-6xl mx-auto p-3 flex flex-col">
+        {loading?(<p className="text-xl text-gray-500">loading</p>):
+        <>
         {posts && posts.length > 0 && (
           <div className="flex flex-col gap-6">
             <h2 className="text-2xl font-semibold text-center">Recent Posts</h2>
@@ -71,16 +81,15 @@ function Home() {
             </div>
             <Link
               to={"/search"}
-              className="text-teal-500 font-semibold text-xs sm:text-sm hover:underline text-center"
+              className="text-teal-500 font-semibold text-sm hover:underline text-center"
             >
               See All Posts
             </Link>
           </div>
         )}
+        </>
+        }
       </div>
-      {/* <div className=" bg-blue-200 dark:bg-slate-700">
-        <CallToAction />
-      </div> */}
     </div>
   );
 }

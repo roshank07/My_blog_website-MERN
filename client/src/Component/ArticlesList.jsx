@@ -17,7 +17,7 @@ export default function ArticlesList({ post }) {
     : cleanedContent;
 
   return (
-    <div className="flex border-t-2 border-gray-100 dark:border-gray-700 pt-3 pb-3">
+    <div className="flex border-t-2 pt-3 pb-3">
       <div className="pr-4">
         <Link to={`/post/${post.slug}`}>
         <img src={`${post.image}`} className="w-40 h-20 object-cover" alt={post.title} />
@@ -25,7 +25,7 @@ export default function ArticlesList({ post }) {
         
       </div>
       <div className="flex flex-col">
-        <div className="text-gray-500 text-xs">
+        <div className="text-xs">
           {new Date(post.updatedAt).toLocaleDateString("en-US", {
             month: "short",
             day: "numeric",
@@ -33,7 +33,7 @@ export default function ArticlesList({ post }) {
           })}
         </div>
         <div className="text-xl font-semibold">{post.title}</div>
-        <div className="text-sm text-gray-700 overflow-hidden" style={{ maxHeight: `${maxContentHeight}px` }}>
+        <div className="text-sm overflow-hidden" style={{ maxHeight: `${maxContentHeight}px` }}>
           {truncatedContent}
         </div>
       </div>

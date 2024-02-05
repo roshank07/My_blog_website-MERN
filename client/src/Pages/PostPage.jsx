@@ -152,14 +152,14 @@ export default function PostPage() {
           {post && (post.content.length / 1000 + 1).toFixed(0)} mins read
         </span>
       </div>
-      <div className="flex justify-between mx-auto w-full max-w-2xl text-xs border-t-2 border-b-2 border-gray-100">
+      <div className="flex justify-between mx-auto w-full max-w-2xl text-xs border-t-2 border-b-2 border-teal-100">
         <div className="p-3 max-w-2xl mx-auto w-full flex flex-start">
           <span className="pr-2">
             <button
-              className={`text-gray-500 hover:text-red-400 ${
+              className={`hover:text-red-700 ${
                 currentUser &&
                 post.likes.includes(currentUser._id) &&
-                "!text-red-400"
+                "!text-red-700"
               }`}
               type="button"
               onClick={() => onPostLike(post._id)}
@@ -174,10 +174,10 @@ export default function PostPage() {
           </span>
           <span className="pr-2">
             <button
-              className={`text-gray-500 hover:text-blue-400 ${
+              className={`hover:text-blue-700 ${
                 currentUser &&
                 post.saves.includes(currentUser._id) &&
-                "!text-blue-400"
+                "!text-blue-700"
               }`}
               type="button"
               onClick={() => onPostSave(post._id)}
@@ -206,7 +206,7 @@ export default function PostPage() {
       <img
         src={post && post.image}
         alt={post && post.title}
-        className="mt-1 p-3 max-w-2xl mx-auto w-full object-cover"
+        className="mt-1 max-w-2xl mx-auto w-full object-cover"
       />
       <div
         className="p-3 max-w-2xl mx-auto w-full post-content"
@@ -225,6 +225,12 @@ export default function PostPage() {
           {recentPost &&
             recentPost.map((post) => <PostCard key={post._id} post={post} />)}
         </div>
+        <Link
+              to={"/search"}
+              className="text-teal-500 font-semibold text-sm hover:underline text-center mt-4"
+            >
+              See All Posts
+            </Link>
       </div>
     </main>
   );

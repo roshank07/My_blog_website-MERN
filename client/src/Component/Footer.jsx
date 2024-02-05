@@ -5,7 +5,7 @@ import { BsDribbble, BsFacebook, BsGithub, BsInstagram, BsLinkedin, BsTwitter } 
 
 const Footers=()=>{
   return (
-    <Footer container className='border border-t-8 border-teal-500'>
+    <Footer container className='border border-t-8 border-teal-500 bg-gray-900 text-white'>
       <div className='w-full max-w-7xl mx-auto'>
         <div className="grid w-full justify-between sm:flex md:grid-cols-1">
           <div>
@@ -24,7 +24,7 @@ const Footers=()=>{
               </Footer.LinkGroup>
             </div>
             <div>
-              <Footer.Title title="Follow Me" />
+              <Footer.Title title="Contact" />
               <Footer.LinkGroup col>
               <Footer.Link href="https://www.linkedin.com/in/roshan-purbey-824783168" target='_blank' >LinkedIn</Footer.Link>
                 <Footer.Link href="https://github.com/roshank07" target='_blank'>Github</Footer.Link>
