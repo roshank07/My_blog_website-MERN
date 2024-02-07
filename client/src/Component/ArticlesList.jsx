@@ -17,10 +17,11 @@ export default function ArticlesList({ post }) {
     : cleanedContent;
 
   return (
-    <div className="flex border-t-2 pt-3 pb-3">
-      <div className="pr-4">
+    <div className="border-t-2 pt-3 pb-3">
+      <div className="grid grid-cols-2">
+      <div className="p-2 sm:p-0">
         <Link to={`/post/${post.slug}`}>
-        <img src={`${post.image}`} className="w-40 h-20 object-cover" alt={post.title} />
+        <img src={`${post.image}`} className="w-60 h-30 object-cover" alt={post.title} />
         </Link>
       </div>
       <div className="flex flex-col">
@@ -36,6 +37,8 @@ export default function ArticlesList({ post }) {
           {truncatedContent}
         </div>
       </div>
+      </div>
+     
     </div>
   );
 }
