@@ -47,7 +47,7 @@ function Home() {
 
   return (
     <div className="min-h-screen ">
-      <div className="flex flex-col p-10 max-w-6xl mx-auto">
+      <div className="flex flex-col p-2 sm:p-10 max-w-6xl mx-auto">
         <div className="relative">
           <img
             src={imageUrl}

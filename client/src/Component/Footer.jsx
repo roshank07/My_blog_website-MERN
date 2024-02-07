@@ -21,6 +21,7 @@ const Footers=()=>{
               <Footer.Title title="about" />
               <Footer.LinkGroup col>
                 <Footer.Link href="/about">Void Writes</Footer.Link>
+                <Footer.Link href="/portfolio">Portfolio</Footer.Link>
               </Footer.LinkGroup>
             </div>
             <div>

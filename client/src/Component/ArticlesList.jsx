@@ -22,7 +22,6 @@ export default function ArticlesList({ post }) {
         <Link to={`/post/${post.slug}`}>
         <img src={`${post.image}`} className="w-40 h-20 object-cover" alt={post.title} />
         </Link>
-        
       </div>
       <div className="flex flex-col">
         <div className="text-xs">
