@@ -17,6 +17,7 @@ import ScrollToTop from './Component/ScrollToTop';
 import Search from './Pages/Search';
 import Portfolio from './Pages/Portfolio';
 import ForgetPassword from './Pages/Forget-Password';
+import ResetPassword from './Pages/Reset-Password';
 
 export default function App() {
   return (
@@ -39,6 +40,7 @@ export default function App() {
       <Route path="/signup" element={<SignUp />} />
       <Route path="/search" element={<Search />} />
       <Route path="/forget-password" element={<ForgetPassword/>} />
+      <Route path="/reset-password/:userId/:token" element={<ResetPassword/>} />
       <Route path="/post/:postSlug" element={<PostPage />} />
 
     </Routes>

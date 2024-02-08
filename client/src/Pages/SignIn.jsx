@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { TextInput, Button, Label, Alert, Spinner,ToggleSwitch } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
-import base_url from "../helper.js";
 import { useDispatch, useSelector } from "react-redux";
 import {
   signInStart,
@@ -123,6 +122,7 @@ const SignIn = () => {
                 "SignIn"
               )}
             </Button>
+            <p className="flex justify-center">OR</p>
             <Oauth />
           </form>
           <div className="flex gap-2 text-sm mt-5">
