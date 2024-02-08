@@ -16,6 +16,7 @@ import PostPage from './Pages/PostPage';
 import ScrollToTop from './Component/ScrollToTop';
 import Search from './Pages/Search';
 import Portfolio from './Pages/Portfolio';
+import ForgetPassword from './Pages/Forget-Password';
 
 export default function App() {
   return (
@@ -37,6 +38,7 @@ export default function App() {
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/search" element={<Search />} />
+      <Route path="/forget-password" element={<ForgetPassword/>} />
       <Route path="/post/:postSlug" element={<PostPage />} />
 
     </Routes>
