@@ -45,7 +45,7 @@ const authController={
 
                 const {password:pass,...rest}=userData._doc;
 
-                res.status(200).cookie('access_token',token,{httpOnly:true})
+                res.status(200).cookie('access_token',token,{httpOnly:true,maxAge: 30 * 24 * 60 * 60 * 1000,})
                     .json(rest);
             }
             else
@@ -75,7 +75,7 @@ const authController={
                 {id:userData._id,isAdmin:userData.isAdmin},process.env.JWT_SECRET);
 
             const {password,...rest}=userData._doc;
-            res.status(200).cookie('access_token',token,{httpOnly:true,})
+            res.status(200).cookie('access_token',token,{httpOnly:true,maxAge: 30 * 24 * 60 * 60 * 1000,})
                 .json(rest);
         }
         else{
@@ -92,7 +92,7 @@ const authController={
                 {id:user._id,isAdmin:user.isAdmin},process.env.JWT_SECRET);
 
             const {password,...rest}=user._doc;
-            res.status(200).cookie('access_token',token,{httpOnly:true,})
+            res.status(200).cookie('access_token',token,{httpOnly:true,maxAge: 30 * 24 * 60 * 60 * 1000})
                 .json(rest);
         }
 
