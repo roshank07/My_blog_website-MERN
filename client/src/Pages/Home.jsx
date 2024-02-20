@@ -38,7 +38,8 @@ function Home() {
           setQuote(data);
         }
       } catch (error) {
-        console.error("Error fetching quote:", error);
+        setQuote({content:'Life is like riding a bicycle. To keep your balance, you must keep moving.',author:'Albert Einstein'})
+        console.error("Error fetching quote. Displaying default quote", error);
       }
     };
 
@@ -59,7 +60,7 @@ function Home() {
             <h1 className="text-3xl font-bold lg:text-6xl mb-6">
               Welcome to Void Writes
             </h1>
-            <p className="text-sm lg:text-md text-pink-500">
+            <p className="text-sm lg:text-md text-teal-900">
               "{quote && quote.content}" --{quote && quote.author}
             </p>
           </div>
