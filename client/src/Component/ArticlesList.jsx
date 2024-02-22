@@ -19,7 +19,7 @@ export default function ArticlesList({ post }) {
   return (
     <div className="border-t-2 pt-3 pb-3">
       <div className="grid grid-cols-2">
-      <div className="p-2 sm:p-0">
+      <div className="pr-2">
         <Link to={`/post/${post.slug}`}>
         <img src={`${post.image}`} className="w-60 h-30 object-cover" alt={post.title} />
         </Link>
