@@ -126,6 +126,57 @@ const authController = {
       next(error);
     }
   },
+  facebookSignIn: async (req, res, next) => {
+    const { name, email, facebookPhotoUrl } = req.body;
+    try {
+      const userData = await User.findOne({ email: email });
+
+      if (userData) {
+        const token = JsonWebToken.sign(
+          { id: userData._id, isAdmin: userData.isAdmin },
+          process.env.JWT_SECRET
+        );
+
+        const { password, ...rest } = userData._doc;
+        res
+          .status(200)
+          .cookie("access_token", token, {
+            httpOnly: true,
+            maxAge: 30 * 24 * 60 * 60 * 1000,
+          })
+          .json(rest);
+      } else {
+        const generatedPassword =
+          Math.random().toString(36).slice(-8) +
+          Math.random().toString(36).slice(-8);
+        const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
+        const user = new User({
+          username:
+            name.toLowerCase().split(" ").join("") +
+            Math.random().toString(9).slice(-4),
+          email: email,
+          password: hashedPassword,
+          profilePicture: facebookPhotoUrl,
+        });
+        await user.save();
+        const token = JsonWebToken.sign(
+          { id: user._id, isAdmin: user.isAdmin },
+          process.env.JWT_SECRET
+        );
+
+        const { password, ...rest } = user._doc;
+        res
+          .status(200)
+          .cookie("access_token", token, {
+            httpOnly: true,
+            maxAge: 30 * 24 * 60 * 60 * 1000,
+          })
+          .json(rest);
+      }
+    } catch (error) {
+      next(error);
+    }
+  },
 
   forgotPassword: async (req, res, next) => {
     const { email } = req.body;
